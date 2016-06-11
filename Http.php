@@ -75,7 +75,8 @@ namespace QL\Ext\Lib;
  * @from http://www.phpfour.com/lib/http
  * @since Version 0.1
  * @original author      Md Emran Hasan <phpfour@gmail.com>
- * @modify by       Charlie Jade
+ * @modify by       Charlie Jade,Jaeger<JaegerCode@gmail.com>
+ * @version         1.1
  */
 
 class Http
@@ -427,7 +428,7 @@ class Http
         {
             if(isset($queryString))
             {
-                $this->target = $this->target . "?" . $queryString;
+                $this->target = $this->target . (strstr($this->target,'?') !== false?'&':'?') . $queryString;
             }
         }
         
