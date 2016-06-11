@@ -200,18 +200,15 @@ class Http
         $this->clear();
         foreach ($config as $key => $val)
         {
-            if (isset($this->$key))
+            $method = 'set' . ucfirst(str_replace('_', '', $key));
+
+            if (method_exists($this, $method))
             {
-                $method = 'set' . ucfirst(str_replace('_', '', $key));
-                
-                if (method_exists($this, $method))
-                {
-                    $this->$method($val);
-                }
-                else
-                {
-                    $this->$key = $val;
-                }            
+                $this->$method($val);
+            }
+            elseif (isset($this->$key))
+            {
+                $this->$key = $val;
             }
         }
     }
@@ -712,7 +709,7 @@ class Http
         if($this->status == 0)
         {
             // Oooops !
-            if(!eregi($match = "^http/[0-9]+\\.[0-9]+[ \t]+([0-9]+)[ \t]*(.*)\$", $headers[0], $matches))
+            if(!preg_match("/^http\/[0-9]+\\.[0-9]+[ \t]+([0-9]+)[ \t]*(.*)\$/", $headers[0], $matches))
             {
                 $this->_setError('Unexpected HTTP response status');
                 return FALSE;
