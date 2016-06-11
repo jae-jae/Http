@@ -379,11 +379,13 @@ class Http
     
     /** 执行一条 http get 请求  */
     public function get($url, $data=array()){
+        $this->params = array();
         return $this->execute($url, '', 'GET', $data);
     }
     
     /** 执行一条 http post 请求  */
     public function post($url, $data=array()){
+        $this->params = array();
         return $this->execute($url, '', 'POST', $data);
     }
     
@@ -414,18 +416,7 @@ class Http
         if(is_array($this->params) && count($this->params) > 0)
         {
             // Get a blank slate
-            $tempString = array();
-            
-            // Convert data array into a query string (ie animal=dog&sport=baseball)
-            foreach ($this->params as $key => $value) 
-            {
-                if(strlen(trim($value))>0)
-                {
-                    $tempString[] = $key . "=" . urlencode($value);
-                }
-            }
-            
-            $queryString = join('&', $tempString);
+            $queryString = http_build_query($this->params);
         }
         
         // 如果 cURL 没有安装就使用 fscokopen 执行请求
