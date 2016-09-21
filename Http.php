@@ -39,7 +39,7 @@ namespace QL\Ext\Lib;
     
     $http = new Http();
     $http->initialize($httpConfig);
-    
+    $http->execute();
     $result = $http->result;
 
 5. 复杂的设置: 
