@@ -469,7 +469,7 @@ class Http
                 }
             }
             
-            $cookieString = join('&', $tempString);
+            $cookieString = join(';', $tempString);
         }
         
         // Do we need to use cURL
